@@ -1,17 +1,28 @@
 <template>
-  <PostList :posts="posts"></PostList>
+  <div v-if="error">
+    {{error}}
+  </div>
+  <div v-if="posts.length > 0">
+    <PostList :posts="posts"></PostList>
+  </div>
+  <div v-else>
+    Loading data from API ...
+  </div>
 </template>
 
 <script>
 import PostList from '../components/PostList'
-import { ref } from 'vue'
+import getPosts from '../composables/getPosts'
 export default {
   components: { PostList },
   setup() {
-    let posts = ref([]);
+    let { posts, error, loadData } = getPosts();
+
+    loadData();
 
     return {
-      posts
+      posts,
+      error
     }
   }
 }

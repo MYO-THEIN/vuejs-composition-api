@@ -1,38 +1,46 @@
 <template>
-    <div class="post">
-        <router-link :to="{name: 'detail', params: {id: post.id} }">
-            <h2>{{post.title}}</h2>
-        </router-link>
-        <p>{{cuttedBody}}</p>
+    <div v-if="post" class="post">
+        <h2>{{post.title}}</h2>
+        <p>{{post.body}}</p>
+
         <div v-for="tag in post.tags" :key="tag" class="pill">
             <router-link :to="{name: 'tag', params: {tag} }">
                 {{tag}}
             </router-link>
         </div>
     </div>
+    <div v-else>
+        <Spinner></Spinner>
+    </div>
 </template>
 
 <script>
-import { computed } from '@vue/runtime-core'
+import Spinner from '../components/Spinner'
+import getPost from '../composables/getPost'
+import { useRoute } from 'vue-router'
+
 export default {
+    components: { Spinner },
     props: [
-        'post'
+        'id'
     ],
-    setup(props) {
-        let cuttedBody = computed(()=>{
-            return props.post.body.substring(0, 30) + ' ...';
-        });
+    setup() {
+        let route = useRoute();
+        let { post, error, loadData } = getPost(route.params.id);
+        loadData();
 
         return {
-            cuttedBody
-        }
+            post,
+            error
+        };
     }
 }
 </script>
 
 <style>
 .post {
-    margin: 0 40px 30px;
+    max-width: 1200px;
+    margin: 0 auto;
     padding-bottom: 30px;
     border-bottom: 1px dashed #e7e7e7;
 }
@@ -64,13 +72,5 @@ export default {
     padding: 8px;
     border-radius: 20px;
     font-size: 14px;
-}
-.pill a {
-    color: black;
-    text-decoration: none;
-}
-.pill a.router-link-active {
-    color: #444;
-    font-weight: bold;
 }
 </style>

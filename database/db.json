@@ -1,19 +1,41 @@
 {
-    "posts": [
-        {
-            "id": 1,
-            "title": "Post Title 1",
-            "body": "Post Body 1"
-        },
-        {
-            "id": 2,
-            "title": "Post Title 2",
-            "body": "Post Body 2"
-        },
-        {
-            "id": 3,
-            "title": "Post Title 3",
-            "body": "Post Body 3"
-        }
-    ]
+  "posts": [
+    {
+      "title": "Post Title 4",
+      "body": "Post Body 4",
+      "tags": [
+        "html",
+        "css",
+        "express"
+      ],
+      "id": 4
+    },
+    {
+      "title": "Post Title 5",
+      "body": "Post Body 5",
+      "tags": [
+        "vue",
+        "tailwind"
+      ],
+      "id": 5
+    },
+    {
+      "title": "Post Title 6",
+      "body": "Post Body 6",
+      "tags": [
+        "web dev",
+        "html",
+        "css"
+      ],
+      "id": 6
+    },
+    {
+      "title": "Post Title 7",
+      "body": "Post Body 7",
+      "tags": [
+        "angular"
+      ],
+      "id": 7
+    }
+  ]
 }

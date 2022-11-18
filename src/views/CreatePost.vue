@@ -19,6 +19,9 @@
 <script>
 import { ref } from '@vue/reactivity'
 import { useRouter } from 'vue-router'
+import { firestoreDB } from '../firebase/config'
+import { addDoc, collection } from 'firebase/firestore'
+
 export default {
     setup() {
         let router = useRouter();
@@ -34,17 +37,27 @@ export default {
             tag.value = "";
         },
         save = async()=>{
-            await fetch("http://localhost:3000/posts", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    title: title.value,
-                    body: body.value,
-                    tags: tags.value
-                })
-            });
+            let newPost = {
+                title: title.value,
+                body: body.value,
+                tags: tags.value
+            };
+
+            let response = await addDoc(collection(firestoreDB, "posts"), newPost);
+            console.log("New Post ID: ", response.id);
+
+            // local storage using JSON-SERVER
+            // await fetch("http://localhost:3000/posts", {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json"
+            //     },
+            //     body: JSON.stringify({
+            //         title: title.value,
+            //         body: body.value,
+            //         tags: tags.value
+            //     })
+            // });
 
             router.push({name: 'home'});
         };
@@ -104,8 +117,10 @@ button {
     background: #ff8800;
     color: white;
     border: none;
+    border-radius: 15px;
     padding: 8px 16px;
-    font-size: 18px
+    font-size: 18px;
+    cursor: pointer;
 }
 .pill {
     display: inline-block;

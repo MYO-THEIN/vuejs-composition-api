@@ -1,5 +1,5 @@
 import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+import { getFirestore, serverTimestamp } from 'firebase/firestore'
 
 const firebaseConfig = {
     apiKey: "AIzaSyDyKUVNfqHC4lvotqHxZ4ykUcEFTsuv0PQ",
@@ -18,5 +18,6 @@ let firestoreDB = getFirestore(firebaseApp);
 
 export {
     firebaseApp,
-    firestoreDB
+    firestoreDB,
+    serverTimestamp
 };
